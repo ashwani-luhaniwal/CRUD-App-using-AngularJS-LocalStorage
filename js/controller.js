@@ -105,7 +105,7 @@ userApp.controller('UserListCtrl', function($scope, $http) {
     $scope.update_user = true;
     $scope.add_user = false;
 
-    var selectedUser = localStorage.key(index);
+    var selectedUser = 'item' + index;
     var userRecord = localStorage[selectedUser];
     var parsedRecord = JSON.parse(userRecord);
 
@@ -122,6 +122,7 @@ userApp.controller('UserListCtrl', function($scope, $http) {
 
   }
 
+  // function to update particular user record in localStorage
   $scope.user_update = function() {
 
     // Get existing user record in an object         
@@ -142,37 +143,27 @@ userApp.controller('UserListCtrl', function($scope, $http) {
     // Update localStorage data with new values
     localStorage.setItem( 'item' + updateUser.id, JSON.stringify(updateUser) );
 
-    // Add new user object to the model by adding it to the pageItems array
-    $scope.pagedItems.push( updateUser );
+    // Update existing user object to the model
+    for (var i = 0; i < $scope.pagedItems.length; i++) {
+      if(updateUser.id === $scope.pagedItems[i].id) { 
+        console.log('inside loop');
+        $scope.pagedItems[i].fullname = $scope.full_name;
+        $scope.pagedItems[i].firstAddress = $scope.addr_first;
+        $scope.pagedItems[i].secondAddress = $scope.addr_second;
+        $scope.pagedItems[i].thirdAddress = $scope.addr_third;
+        $scope.pagedItems[i].postCode = $scope.postcode;
+        $scope.pagedItems[i].dateOfBirth = $scope.dob;
+        $scope.pagedItems[i].emailAddress = $scope.email_addr;
+        $scope.pagedItems[i].currentPosition = $scope.position;
+        $scope.pagedItems[i].authorization = $scope.authorized;
+        break; 
+      }
+    }
 
     $scope.clear_fields();
     $scope.add_user = true;
     $scope.update_user = false;
 
-        /*$http.post('db.php?action=update_user', 
-        	{
-            	'id'            : $scope.id,
-           		'full_name'     : $scope.full_name, 
-            	'addr_first'     : $scope.addr_first, 
-             	'addr_second'    : $scope.addr_second,
-            	'addr_third' : $scope.addr_third,
-              'postcode'   : $scope.postcode,
-              'dob'        : $scope.dob,
-              'email_addr' : $scope.email_addr,
-              'position'   : $scope.position,
-              'authorized' : $scope.authorized
-         	}
-      	)
-    	.success(function (data, status, headers, config) {                 
-       		$scope.get_users();
-     		alert("User has been Updated Successfully");
-        $scope.clear_fields();
-        $scope.add_user = true;
-        $scope.update_user = false;
-     	})
-    	.error(function(data, status, headers, config){
-                   
-       	});*/
     }
 
 });

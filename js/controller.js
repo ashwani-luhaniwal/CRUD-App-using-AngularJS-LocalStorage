@@ -55,7 +55,9 @@ userApp.controller('UserListCtrl', function($scope, $http) {
   }
 	
   // function to add new user record in localStorage
-	$scope.user_submit = function() {
+	$scope.user_submit = function($event) {
+
+    var exist = false;
 
     if($scope.addUserForm.validate()) {
 
@@ -74,16 +76,32 @@ userApp.controller('UserListCtrl', function($scope, $http) {
         guidValue: $scope.guid
       };
 
-      // Add newUser object to localStorage as the value to a new property
-      localStorage.setItem( 'item' + localStorage.length, JSON.stringify(newUser) );
+      // checking for email address already exists in the localStorage
+      for (var i = 0; i < $scope.pagedItems.length; i++) {
+        if(newUser.emailAddress === $scope.pagedItems[i].emailAddress) {
+          exist = true;
+          alert("User already existed with this email address");
+          break; 
+        }
+      }
 
-      // Add new user object to the model by adding it to the pageItems array
-      $scope.pagedItems.push( newUser );
+      if (!exist) {
+
+        // Add newUser object to localStorage as the value to a new property
+        localStorage.setItem( 'item' + localStorage.length, JSON.stringify(newUser) );
+
+        // Add new user object to the model by adding it to the pageItems array
+        $scope.pagedItems.push( newUser );
+
+        // call function to clear out all input fields
+        $scope.clear_fields();
+
+      }
 
     }
-
-    // call function to clear out all input fields
-    $scope.clear_fields();
+    
+    // stop propagation of ng-click event
+    $event.preventDefault();
 
   }
 
@@ -123,7 +141,7 @@ userApp.controller('UserListCtrl', function($scope, $http) {
   }
 
   // function to update particular user record in localStorage
-  $scope.user_update = function() {
+  $scope.user_update = function($event) {
 
     // Get existing user record in an object         
     var updateUser = {
@@ -139,7 +157,6 @@ userApp.controller('UserListCtrl', function($scope, $http) {
       authorization: $scope.authorized,
     };
 
-    // alert(updateUser.id);
     // Update localStorage data with new values
     localStorage.setItem( 'item' + updateUser.id, JSON.stringify(updateUser) );
 
@@ -164,7 +181,10 @@ userApp.controller('UserListCtrl', function($scope, $http) {
     $scope.add_user = true;
     $scope.update_user = false;
 
-    }
+    // stop propagation of ng-click event
+    $event.preventDefault();
+
+  }
 
 });
 

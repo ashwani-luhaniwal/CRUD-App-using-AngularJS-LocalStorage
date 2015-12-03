@@ -35,7 +35,7 @@
 		<div class="container">
       <div class="f-space15"></div>
       <div class="row">
-        <div class="heading">CRUD Application using AngularJS, PHP and MySQL</div>
+        <div class="heading">CRUD Application using AngularJS and LocalStorage (Web Storage API)</div>
       </div>
       <hr />
 			<div class="full-step3">
@@ -384,8 +384,8 @@
             
                 <div class="form-group">
                   <div class="col-xs-offset-7 col-xs-5">
-                    <button class="button orange styled" type="submit" name="add_newuser" ng-show='add_user' ng-click="user_submit()">ADD USER</button>
-                    <button class="button orange styled" type="submit" name="update_user" ng-show='update_user' ng-click="user_update()">UPDATE USER</button>
+                    <button class="button orange styled" type="submit" name="add_newuser" ng-show='add_user' ng-click="user_submit($event)">ADD USER</button>
+                    <button class="button orange styled" type="submit" name="update_user" ng-show='update_user' ng-click="user_update($event)">UPDATE USER</button>
                   </div>
                 </div>
               </form>

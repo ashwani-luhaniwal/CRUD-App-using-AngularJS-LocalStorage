@@ -420,7 +420,7 @@
                     <button class="button orange edit-delete" ng-click="user_edit(users.id)">EDIT</button>
                   </div>
                   <div class="col-xs-6">
-                    <button class="button orange edit-delete" ng-click="user_delete(users.id)">DELETE</button>
+                    <button class="button orange edit-delete" ng-click="user_delete(users.id, $index)">DELETE</button>
                   </div>
                 </div>
               </div>

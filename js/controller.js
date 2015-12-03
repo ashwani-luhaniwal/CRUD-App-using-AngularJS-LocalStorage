@@ -99,20 +99,20 @@ userApp.controller('UserListCtrl', function($scope, $http) {
       }
 
     }
-    
+
     // stop propagation of ng-click event
     $event.preventDefault();
 
   }
 
   // function to delete specific user record from the list
-  $scope.user_delete = function(index) {
+  $scope.user_delete = function(itemIndex, index) {
 
     // index param is an ngRepeat variable  
     // Delete item from localStorage
-    localStorage.removeItem( 'item' + index );
+    localStorage.removeItem( 'item' + itemIndex );
 
-    // Remove item from the contacts array
+    // Remove item from the pagedItems array
     $scope.pagedItems.splice( index, 1 );
 
   }
